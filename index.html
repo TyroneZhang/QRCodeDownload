@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<title>跳蚤云图</title>
+    <meta charset="UTF-8"/>
+    <meta name="full-screen" content="yes">
+	<meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;"/>    
+  	<style>  		
+		html,body{height:100%; overflow: hidden;margin:0}
+		.download{height:100%; background: #88c376; text-align: center; margin: 0 auto; display: none; }
+		.download .phoneimg{width:55%; left: 22.5%; position:absolute; bottom:20%;z-index:10;}
+		.download .footer{height:20%;width:100%;bottom:0; position:absolute; z-index:10; display: table; text-align: center; background: url(images/app_bg.jpg);}
+		.download .footer div{height:inherit; display:table-cell; vertical-align: middle;}
+		.download .footer img{width:55%;max-height:80%}
+		
+		#ts{background:rgba(0,0,0,0.7); display: none; position:absolute;height:100%; left:0; top:0;width:100%; z-index: 100;}	
+		#ts .jt{position:absolute; right:1em; top: 2em;width:50%}	
+		
+		#iphone{height:100%;width:100%; background: #fffaec; position:relative; display: none;}
+		#iphone div{text-align: center; vertical-align: middle; width:100%; height:100%;}
+		#iphone div img{height:75%;margin-top:12.5%}	
+		
+		@media screen and (min-width: 800px){ 
+			.download .phoneimg{width:32%;left: 34%;} 
+			.download .footer{height:10%;}
+			.download .footer img{width:25%;}
+			.download .phoneimg{bottom:10%;}
+		} 
+		
+  	</style>
+    
+</head>    
+<body>
+	<div id="ts">
+  		<img src="images/app_img2.png" class="jt" />  		
+  	</div>
+     <div class="download" id="download">      	
+  		<img src="images/app_img.jpg" class="phoneimg"/>
+  		<div class="footer">
+  			<div>
+  				<a href="App/tzyt1.0.apk"><img src="images/app_btn.png"/></a>
+  			</div>
+  		</div>
+     </div>
+     <div id="iphone" >
+     	<div><img src="images/app_img4.png"/></div>
+     </div>
+</body>
+</html>
+
+<script>
+		/*判断是否为微信内核 是 则显示引导图标 否则 不显示直接下载*/
+		var WxObj=window.navigator.userAgent.toLowerCase();
+		var plat=getUrlByPlatform();
+		if(WxObj.match(/microMessenger/i)=='micromessenger'){
+			if(plat==0){
+        document.getElementById('ts').style.display='table';				
+				document.getElementById('download').style.display='block';
+			}else{
+				document.getElementById('iphone').style.display='block';
+			}
+		}else{
+      if(plat==0){
+				document.getElementById('download').style.display='block';
+        location = "App/tzyt1.0.apk"
+			}else{
+				document.getElementById('iphone').style.display='block';
+			}
+		}
+
+        function getUrlByPlatform(){
+            var Terminal={
+            // 辨别移动终端类型
+            platform:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {                    
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,// android终端或者uc浏览器
+                    iPhone: u.indexOf('iPhone') > -1 ,// 是否为iPhone或者QQHD浏览器
+                    iPad: u.indexOf('iPad') > -1,// 是否iPad
+                    };
+                }(),            	
+                language:(navigator.browserLanguage || navigator.language).toLowerCase()// 辨别移动终端的语言：zh-cn、en-us、ko-kr、ja-jp...
+            }         
+           	var platNum=0;
+            if(Terminal.platform.android){
+            	platNum=0;
+            }else if (Terminal.platform.iPhone){
+            	platNum=1;
+            }else if (Terminal.platform.iPad){
+            	platNum=2;
+            }
+            return platNum;
+        }
+
+</script>
